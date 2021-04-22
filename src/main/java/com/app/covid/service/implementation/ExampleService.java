@@ -10,6 +10,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ExampleService implements IExampleService {
 
+	@Override
+	public Example getExampleInfo(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Example findByName(String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+/*
   private final IExampleRepository exampleRepository;
 
   @Override
@@ -20,5 +32,5 @@ public class ExampleService implements IExampleService {
   @Override
   public Example findByName(String value) {
     return exampleRepository.findByName(value);
-  }
+  }*/
 }

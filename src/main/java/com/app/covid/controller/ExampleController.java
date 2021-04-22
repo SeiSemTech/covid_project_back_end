@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(ResourceMapping.EXAMPLE)
 public class ExampleController {
-
+/*
   private final IExampleService exampleService;
 
   @GetMapping("/{id}")
