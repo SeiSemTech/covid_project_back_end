@@ -1,4 +1,4 @@
-/*package com.app.covid.util;
+package com.app.covid.util;
 
 import java.security.SecureRandom;
 
@@ -15,7 +15,6 @@ public class PasswordGenerator {
  
         // each iteration of loop choose a character randomly from the given ASCII range
         // and append it to StringBuilder instance
- 
         for (int i = 0; i < len; i++) {
             int randomIndex = random.nextInt(chars.length());
             sb.append(chars.charAt(randomIndex));
@@ -24,4 +23,4 @@ public class PasswordGenerator {
         return sb.toString();
     }
 
-}*/
+}
