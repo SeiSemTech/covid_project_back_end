@@ -1,4 +1,4 @@
-/*package com.app.covid.security;
+package com.app.covid.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(securedEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	/*@Autowired
+	@Autowired
 	private UserDetailService myAppUserDetailsService;	
 
 	@Autowired
@@ -54,4 +54,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(myAppUserDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
-} */
+}

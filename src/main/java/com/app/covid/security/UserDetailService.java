@@ -1,4 +1,4 @@
-/*package com.app.covid.security;
+package com.app.covid.security;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,13 +14,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.app.covid.domain.Privilege;
+import com.app.covid.domain.Role;
+import com.app.covid.domain.Usuario;
+import com.app.covid.repository.IUserRepository;
+import com.app.covid.repository.RoleRepository;
+
 
 @Service("userDetailsService")
 @Transactional
 public class UserDetailService implements UserDetailsService {
  
     @Autowired
-    private UsuarioRepository userRepository;
+    private IUserRepository userRepository;
   
     @Autowired
     private RoleRepository roleRepository;
@@ -38,7 +44,7 @@ public class UserDetailService implements UserDetailsService {
         }
  
         return new org.springframework.security.core.userdetails.User(
-          user.getDocumento(), user.getPassword(), user.isEnabled(), true, true, 
+          user.getCedula(), user.getPassword(), true, true, true, 
           true, getAuthorities(user.getRoles()));
     }
  
@@ -68,4 +74,4 @@ public class UserDetailService implements UserDetailsService {
         }
         return authorities;
     }
-}*/
+}

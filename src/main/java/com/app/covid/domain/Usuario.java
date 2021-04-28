@@ -1,6 +1,7 @@
 package com.app.covid.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,16 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Usuario {
 
 	@Id
 	@Column(name = "id")
@@ -32,24 +33,28 @@ public class Usuario implements Serializable {
 
 	@Column(name = "login")
 	private String login;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "cedula")
-	private Long cedula;
-	
+	private String cedula;
+
 	@Column(name = "fecha_creacion")
 	private Date fecha_creacion;
 
 	@Column(name = "estado")
 	private Boolean estado;
-	
+
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Role> roles;
+
 	public Usuario() {
-		super();
 	}
 
-	public Usuario(String nombre, String apellido, String login, String password, Long cedula, Date fecha_creacion,
+	public Usuario(String nombre, String apellido, String login, String password, String cedula, Date fecha_creacion,
 			Boolean estado) {
 		super();
 		this.nombre = nombre;
@@ -101,11 +106,11 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
-	public Long getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(Long cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 
@@ -125,6 +130,17 @@ public class Usuario implements Serializable {
 		this.estado = estado;
 	}
 
+	/**
+	 * @return the roles
+	 */
+	public Collection<Role> getRoles() {
+		return roles;
+	}
 
-	
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
 }

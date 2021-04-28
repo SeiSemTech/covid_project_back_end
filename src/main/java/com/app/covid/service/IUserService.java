@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.app.covid.domain.Usuario;
 
-
 public interface IUserService {
 
 	List<Usuario> getUsuarios();
@@ -17,6 +16,9 @@ public interface IUserService {
 	void deleteUsuario(Long id);
 
 	Optional<Usuario> findByIdUsuario(Long id);
-	
+
+	Usuario findByUser(String user);
+
+	Usuario findByLogin(String user, String pass);
 
 }

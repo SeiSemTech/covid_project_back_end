@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.covid.domain.AuthenticationRequest;
 import com.app.covid.domain.Usuario;
 import com.app.covid.service.IUserService;
 import com.app.covid.util.ErrorMessage;
 import com.app.covid.util.ErrorMessage2;
-
-
 
 @RestController
 @RequestMapping(value = "user/v1")
@@ -51,11 +50,17 @@ public class UsuarioController {
 		}
 
 	}
+
 	// servicio para crear un usuario
 	@RequestMapping(value = "/createUsuario", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> createUser(@RequestBody Usuario user) {
+		Usuario user2 = userService.findByUser(user.getCedula());
+		if (user2 != null) {
+			return new ResponseEntity(new ErrorMessage2(1, "El usuario ya se encuentra registrado"), HttpStatus.OK);
+		}
+
 		if (user.getNombre().isEmpty() || user.getApellido().isEmpty()) {
-			return new ResponseEntity(new ErrorMessage2(1, "informacion incompleta"), HttpStatus.OK);
+			return new ResponseEntity(new ErrorMessage2(2, "informacion incompleta"), HttpStatus.OK);
 		}
 		user.setEstado(true);
 		userService.createUsuario(user);
@@ -72,16 +77,29 @@ public class UsuarioController {
 		userService.updateUsuario(user);
 		return new ResponseEntity(new ErrorMessage2(0, "Usuario actualizado con exito!"), HttpStatus.OK);
 	}
-	
+
 	// servicio para eliminar un usuario
-		@RequestMapping(value = "/deleteUsuario", method = RequestMethod.POST, headers = "Accept=application/json")
-		public ResponseEntity<?> deleteUsuario(@RequestBody Usuario user) {
-			Optional<Usuario> us = userService.findByIdUsuario(user.getId());
-			if (!us.isPresent()) {
-				return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el usuario"), HttpStatus.OK);
-			}
-			userService.deleteUsuario(user.getId());
-			return new ResponseEntity(new ErrorMessage2(0, "Usuario eliminado con exito!"), HttpStatus.OK);
+	@RequestMapping(value = "/deleteUsuario", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<?> deleteUsuario(@RequestBody Usuario user) {
+		Optional<Usuario> us = userService.findByIdUsuario(user.getId());
+		if (!us.isPresent()) {
+			return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el usuario"), HttpStatus.OK);
 		}
+		userService.deleteUsuario(user.getId());
+		return new ResponseEntity(new ErrorMessage2(0, "Usuario eliminado con exito!"), HttpStatus.OK);
+	}
+
+	// servcio validacion login opcional
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<?> login(@RequestBody AuthenticationRequest user) {
+		Usuario user2 = userService.findByLogin(user.getUsername(), user.getPassword());
+		System.out.println("usuario camilo " + user2);
+		if (user2 == null) {
+			return new ResponseEntity(new ErrorMessage2(1, "Credenciales incorrectas"), HttpStatus.OK);
+		}
+
+		return new ResponseEntity(new ErrorMessage2(0, "Autenticacion exitosa!"), HttpStatus.OK);
+	}
 
 }

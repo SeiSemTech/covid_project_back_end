@@ -1,4 +1,5 @@
-/*package com.app.covid.util;
+package com.app.covid.util;
+
 
 import java.util.Date;
 import java.util.HashMap;
@@ -54,4 +55,4 @@ public class JwtUtil {
 		return (username.equals(userDetails.getUsername())&& !isTokenExpired(token));
 	}
 
-}*/
+}

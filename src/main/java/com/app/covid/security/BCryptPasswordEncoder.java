@@ -1,4 +1,4 @@
-/*package com.app.covid.security;
+package com.app.covid.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -45,4 +45,4 @@ public class BCryptPasswordEncoder implements PasswordEncoder {
 		return sb.toString();
 	}
 
-}*/
+}

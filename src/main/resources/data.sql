@@ -1,14 +1,8 @@
-insert into Example (id, value_example, description) values (1, 'example', 'this is an example');
 
-DROP TABLE IF EXISTS usuario;
+insert into role(id,name) VALUES(1,'ROLE_ADMIN')
+insert into role(id,name) VALUES(2,'ROLE_CLIENT')
+insert into role(id,name) VALUES(3,'ROLE_USER')
 
-CREATE TABLE usuario (
-  id INT AUTO_INCREMENT  PRIMARY KEY,
-  nombre VARCHAR(250) NOT NULL,
-  apellido VARCHAR(250) NOT NULL,
-  login VARCHAR(250) NOT NULL,
-  password VARCHAR(250) NOT NULL,
-  cedula INT ,
-  fecha_creacion timestamp,
-  estado BOOLEAN DEFAULT true
-);
+insert into privilege(id,name) VALUES(1,'administador')
+insert into privilege(id,name) VALUES(2,'usuario')
+
