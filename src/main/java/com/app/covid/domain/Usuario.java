@@ -35,10 +35,10 @@ public class Usuario {
 	private Long id;
 
 	@Column
-	private String nombre;
+	private String name;
 
 	@Column
-	private String apellido;
+	private String lastname;
 
 	@Column
 	private String username;
@@ -47,13 +47,13 @@ public class Usuario {
 	private String password;
 
 	@Column
-	private String cedula;
+	private String document;
 
 	@Column
-	private Date fecha_creacion;
+	private Date creationDate;
 
 	@Column
-	private Boolean estado;
+	private Boolean state;
 
 	@ManyToMany
 	@JsonIgnore

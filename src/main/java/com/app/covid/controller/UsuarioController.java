@@ -47,15 +47,15 @@ public class UsuarioController {
 	// servicio para crear un usuario
 	@RequestMapping(value = "/createUsuario", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> createUser(@RequestBody Usuario user) {
-		Usuario user2 = userService.findByUser(user.getCedula());
+		Usuario user2 = userService.findByUser(user.getDocument());
 		if (user2 != null) {
 			return new ResponseEntity(new ErrorMessage2(1, "El usuario ya se encuentra registrado"), HttpStatus.OK);
 		}
 
-		if (user.getNombre().isEmpty() || user.getApellido().isEmpty()) {
+		if (user.getName().isEmpty() || user.getLastname().isEmpty()) {
 			return new ResponseEntity(new ErrorMessage2(2, "información incompleta"), HttpStatus.OK);
 		}
-		user.setEstado(true);
+		user.setState(true);
 		userService.createUsuario(user);
 		return new ResponseEntity(new ErrorMessage2(0, "Usuario creado con exito!"), HttpStatus.OK);
 	}
