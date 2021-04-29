@@ -1,21 +1,27 @@
 package com.app.covid.domain;
 
 import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "privilege")
 public class Privilege {
-
-	public Privilege(String name) {
-		super();
-		this.name = name;
-	}
-	
-	public Privilege() {
-		super();
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,11 +33,4 @@ public class Privilege {
 	@ManyToMany(mappedBy = "privileges")
 	private Collection<Role> roles;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

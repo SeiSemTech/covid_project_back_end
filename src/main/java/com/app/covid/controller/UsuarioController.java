@@ -1,20 +1,17 @@
 package com.app.covid.controller;
 
-import java.util.ArrayList;
+import com.app.covid.constants.ResourceMapping;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.covid.domain.AuthenticationRequest;
@@ -24,7 +21,7 @@ import com.app.covid.util.ErrorMessage;
 import com.app.covid.util.ErrorMessage2;
 
 @RestController
-@RequestMapping(value = "user/v1")
+@RequestMapping(ResourceMapping.USER)
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST,
 		RequestMethod.OPTIONS }, allowedHeaders = "*")
 public class UsuarioController {
@@ -32,23 +29,19 @@ public class UsuarioController {
 	@Autowired
 	private IUserService userService;
 
-	@RequestMapping(value = "")
-	public ResponseEntity saludo() {
-		return new ResponseEntity(new ErrorMessage2(0, "Bienvenido al sistema covid!"), HttpStatus.OK);
+	@GetMapping()
+	public ResponseEntity<?> saludo() {
+		return new ResponseEntity<>(new ErrorMessage2(0, "Bienvenido al sistema covid!"), HttpStatus.OK);
 	}
 
-	// servcio que trea el listado de usuarios
-
-	@RequestMapping(value = "/getUsuarios", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ResponseEntity<List<Usuario>> getUser() {
-		List<Usuario> listado = new ArrayList<>();
-		listado = userService.getUsuarios();
-		if (listado.isEmpty()) {
-			return new ResponseEntity(new ErrorMessage2(1, "No se ha encontrado informacion"), HttpStatus.OK);
-		} else {
-			return new ResponseEntity(new ErrorMessage(0, "Lista de Usuarios", listado), HttpStatus.OK);
-		}
-
+	// servicio que tarea el listado de usuarios
+	@GetMapping("/getUsuarios")
+	public ResponseEntity<ErrorMessage<List<Usuario>>> getUser() {
+		List<Usuario> listado = userService.getUsuarios();
+		ErrorMessage<List<Usuario>> error = listado.isEmpty() ?
+				new ErrorMessage<>(1, "No se ha encontrado información",null) :
+				new ErrorMessage<>(0, "Lista de Usuarios", listado);
+		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 
 	// servicio para crear un usuario
@@ -60,7 +53,7 @@ public class UsuarioController {
 		}
 
 		if (user.getNombre().isEmpty() || user.getApellido().isEmpty()) {
-			return new ResponseEntity(new ErrorMessage2(2, "informacion incompleta"), HttpStatus.OK);
+			return new ResponseEntity(new ErrorMessage2(2, "información incompleta"), HttpStatus.OK);
 		}
 		user.setEstado(true);
 		userService.createUsuario(user);

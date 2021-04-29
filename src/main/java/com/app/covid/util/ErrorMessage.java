@@ -1,43 +1,21 @@
 package com.app.covid.util;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ErrorMessage<E> {
 
 	private int error;
 	private String mensaje;
-	private List<E> response;
-	public ErrorMessage(int error, String mensaje, List<E> response) {
-		super();
-		this.error = error;
-		this.mensaje = mensaje;
-		this.response = response;
-	}
-	
-	public ErrorMessage(int error, String mensaje) {
-		super();
-		this.error = error;
-		this.mensaje = mensaje;
-	}
-	public int getError() {
-		return error;
-	}
-	public void setError(int error) {
-		this.error = error;
-	}
-	public String getMensaje() {
-		return mensaje;
-	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
-	}
-	public List<E> getResponse() {
-		return response;
-	}
-	public void setResponse(List<E> response) {
-		this.response = response;
-	}
-
-	
+	private E response;
 
 }

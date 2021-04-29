@@ -4,13 +4,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.app.covid.domain.Usuario;
+import org.springframework.data.repository.query.Param;
 
 public interface IUserRepository extends CrudRepository<Usuario, Long> {
 	
-	@Query(value = "Select * FROM Usuario u WHERE u.cedula = ?1", nativeQuery = true)
-	Usuario findByUser(String user);
+	@Query("Select u FROM Usuario u WHERE u.cedula = :user")
+	Usuario findByUser(@Param("user") String user);
 	
-	@Query(value = "Select * FROM Usuario u WHERE u.cedula = ? AND u.password = ?", nativeQuery = true)
-	Usuario findByLogin(String user,String pss);
+	@Query("Select u FROM Usuario u WHERE u.username = :user AND u.password = :pss")
+	Usuario findByLogin(@Param("user") String user, @Param("user") String pss);
 
 }

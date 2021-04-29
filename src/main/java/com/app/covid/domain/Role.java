@@ -3,7 +3,17 @@ package com.app.covid.domain;
 import java.util.Collection;
 
 import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "role")
 public class Role {
@@ -20,44 +30,4 @@ public class Role {
 	@JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
 	private Collection<Privilege> privileges;
 
-	public Role(String name) {
-		super();
-		this.name = name;
-	}
-
-	public Role() {
-		super();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Collection<Usuario> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Collection<Usuario> users) {
-		this.users = users;
-	}
-
-	public Collection<Privilege> getPrivileges() {
-		return privileges;
-	}
-
-	public void setPrivileges(Collection<Privilege> privileges) {
-		this.privileges = privileges;
-	}
 }

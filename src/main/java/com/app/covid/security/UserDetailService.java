@@ -32,9 +32,7 @@ public class UserDetailService implements UserDetailsService {
     private RoleRepository roleRepository;
  
     @Override
-    public UserDetails loadUserByUsername(String username)
-      throws UsernameNotFoundException {
-    	System.out.println(username);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario user = userRepository.findByUser(username);
         if (user == null) {
             return new org.springframework.security.core.userdetails.User(
