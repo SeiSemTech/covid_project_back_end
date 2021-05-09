@@ -59,8 +59,8 @@ ApplicationListener<ContextRefreshedEvent> {
 
 		Role adminRole = roleRepository.findByName("ROLE_ADMIN");
 		Role clientRole = roleRepository.findByName("ROLE_CLIENT");
-		if(userRepository.findByUser("usechesilva")==null) {
-			Usuario user = new Usuario(0L, "Diego", "Useche", "usechesilva", passwordEncoder.encode("admin"), "12154214", 
+		if(userRepository.findByUser("admin")==null) {
+			Usuario user = new Usuario(0L, "USER", "NAME", "admin", passwordEncoder.encode("admin"), "12154214", 
 					new Date(), true, null);
 			ArrayList<Role> roles = new ArrayList<Role>();
 			roles.add(adminRole);
