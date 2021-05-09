@@ -40,13 +40,13 @@ public class Usuario {
 	@Column
 	private String lastname;
 
-	@Column
+	@Column(name="username", unique=true)
 	private String username;
 
 	@Column
 	private String password;
 
-	@Column
+	@Column(name="document", unique=true)
 	private String document;
 
 	@Column
