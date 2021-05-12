@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.covid.domain.AuthenticationRequest;
 import com.app.covid.domain.Usuario;
+import com.app.covid.security.BCryptPasswordEncoder;
 import com.app.covid.service.IUserService;
 import com.app.covid.util.ErrorMessage;
 import com.app.covid.util.ErrorMessage2;
@@ -29,18 +31,20 @@ public class UsuarioController {
 	@Autowired
 	private IUserService userService;
 
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 	@GetMapping()
 	public ResponseEntity<?> saludo() {
-		return new ResponseEntity<>(new ErrorMessage2(0, "Bienvenido al sistema covid!"), HttpStatus.OK);
+		return new ResponseEntity<>(new ErrorMessage2(0, "Bienvenidos al sistema covid!"), HttpStatus.OK);
 	}
 
-	// servicio que tarea el listado de usuarios
+	// servicio que trae el listado de usuarios
 	@GetMapping("/getUsuarios")
 	public ResponseEntity<ErrorMessage<List<Usuario>>> getUser() {
 		List<Usuario> listado = userService.getUsuarios();
-		ErrorMessage<List<Usuario>> error = listado.isEmpty() ?
-				new ErrorMessage<>(1, "No se ha encontrado información",null) :
-				new ErrorMessage<>(0, "Lista de Usuarios", listado);
+		ErrorMessage<List<Usuario>> error = listado.isEmpty()
+				? new ErrorMessage<>(1, "No se ha encontrado información", null)
+				: new ErrorMessage<>(0, "Lista de Usuarios", listado);
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 
@@ -56,6 +60,7 @@ public class UsuarioController {
 			return new ResponseEntity(new ErrorMessage2(2, "información incompleta"), HttpStatus.OK);
 		}
 		user.setState(true);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.createUsuario(user);
 		return new ResponseEntity(new ErrorMessage2(0, "Usuario creado con exito!"), HttpStatus.OK);
 	}
@@ -78,21 +83,11 @@ public class UsuarioController {
 		if (!us.isPresent()) {
 			return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el usuario"), HttpStatus.OK);
 		}
-		userService.deleteUsuario(user.getId());
-		return new ResponseEntity(new ErrorMessage2(0, "Usuario eliminado con exito!"), HttpStatus.OK);
-	}
-
-	// servcio validacion login opcional
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
-	public ResponseEntity<?> login(@RequestBody AuthenticationRequest user) {
-		Usuario user2 = userService.findByLogin(user.getUsername(), user.getPassword());
-		System.out.println("usuario camilo " + user2);
-		if (user2 == null) {
-			return new ResponseEntity(new ErrorMessage2(1, "Credenciales incorrectas"), HttpStatus.OK);
+		if (user.getState() == true) {
+			user.setState(false);
 		}
-
-		return new ResponseEntity(new ErrorMessage2(0, "Autenticacion exitosa!"), HttpStatus.OK);
+		userService.updateUsuario(user);
+		return new ResponseEntity(new ErrorMessage2(0, "Usuario desactivado con exito!"), HttpStatus.OK);
 	}
 
 }

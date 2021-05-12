@@ -3,6 +3,9 @@ package com.app.covid.domain;
 import java.util.Collection;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,9 +27,14 @@ public class Role {
 
 	private String name;
 	@ManyToMany(mappedBy = "roles")
+	@JsonIgnore
 	private Collection<Usuario> users;
 
+	@Column(name = "detalle")
+	private String detalle;
+
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
 	private Collection<Privilege> privileges;
 
