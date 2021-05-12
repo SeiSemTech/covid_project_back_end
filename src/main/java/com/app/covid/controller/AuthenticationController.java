@@ -54,7 +54,10 @@ public class AuthenticationController {
 		final UserDetails userDetails = userDetailService.loadUserByUsername(usuario.getUsername());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+		Usuario user = userRepository.findByUser(usuario.getUsername());
+		String role = (user.getRoles()).iterator().next().getName();
+		
+		return ResponseEntity.ok(new AuthenticationResponse(jwt, role , user));
 	}
 
 }

@@ -24,8 +24,7 @@ import com.app.covid.repository.IUserRepository;
 import com.app.covid.security.BCryptPasswordEncoder;
 
 @Component
-public class InitialDataLoader implements
-ApplicationListener<ContextRefreshedEvent> {
+public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	boolean alreadySetup = false;
 
@@ -38,7 +37,6 @@ ApplicationListener<ContextRefreshedEvent> {
 	@Autowired
 	private IUserRepository userRepository;
 
-	
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
@@ -47,24 +45,29 @@ ApplicationListener<ContextRefreshedEvent> {
 
 		if (alreadySetup)
 			return;
-		Privilege readPrivilege
-		= createPrivilegeIfNotFound("READ_PRIVILEGE");
-		Privilege writePrivilege
-		= createPrivilegeIfNotFound("WRITE_PRIVILEGE");
+		Privilege readPrivilege = createPrivilegeIfNotFound("PERSONAL_PRIVILEGE");
+		Privilege writePrivilege = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
+		Privilege au = createPrivilegeIfNotFound("AUXILIAR_PRIVILEGE");
+		Privilege coo = createPrivilegeIfNotFound("COORDINADOR_PRIVILEGE");
 
-		List<Privilege> adminPrivileges = Arrays.asList(
-				readPrivilege, writePrivilege);        
+		List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege, au, coo);
 		createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-		createRoleIfNotFound("ROLE_CLIENT", Arrays.asList(readPrivilege));
+		createRoleIfNotFound("ROLE_PERSONAL", Arrays.asList(readPrivilege));
+		createRoleIfNotFound("ROLE_AUXILIAR", Arrays.asList(au));
+		createRoleIfNotFound("ROLE_COORDINADOR", Arrays.asList(coo));
 
 		Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-		Role clientRole = roleRepository.findByName("ROLE_CLIENT");
-		if(userRepository.findByUser("admin")==null) {
-			Usuario user = new Usuario(0L, "USER", "NAME", "admin", passwordEncoder.encode("admin"), "12154214", 
+		Role auxiliarRole = roleRepository.findByName("ROLE_AUXILIAR");
+		Role personalRole = roleRepository.findByName("ROLE_PERSONAL");
+		Role coordinadorRole = roleRepository.findByName("ROLE_COORDINADOR");
+		if (userRepository.findByUser("admin") == null) {
+			Usuario user = new Usuario(0L, "USER", "NAME", "admin", passwordEncoder.encode("admin"), "12154214",
 					new Date(), true, null);
 			ArrayList<Role> roles = new ArrayList<Role>();
 			roles.add(adminRole);
-			roles.add(clientRole);
+			roles.add(auxiliarRole);
+			roles.add(personalRole);
+			roles.add(coordinadorRole);
 			user.setRoles(roles);
 			userRepository.save(user);
 		}
@@ -83,12 +86,11 @@ ApplicationListener<ContextRefreshedEvent> {
 	}
 
 	@Transactional
-	private Role createRoleIfNotFound(
-			String name, Collection<Privilege> privileges) {
+	private Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {
 
 		Role role = roleRepository.findByName(name);
 		if (role == null) {
-			role = new Role(null, name, null, privileges);
+			role = new Role(null, name, null, name, privileges);
 			roleRepository.save(role);
 		}
 		return role;
