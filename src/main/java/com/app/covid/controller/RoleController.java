@@ -25,7 +25,7 @@ public class RoleController {
 	@Autowired
 	private IRoleService roleService;
 
-	// servicio que tarea el listado de usuarios
+	// servicio que trae el listado de roles
 	@GetMapping("/getRoles")
 	public ResponseEntity<ErrorMessage<List<Role>>> getRoles() {
 		List<Role> listado = roleService.getRoles();

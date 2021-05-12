@@ -38,7 +38,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(new ErrorMessage2(0, "Bienvenidos al sistema covid!"), HttpStatus.OK);
 	}
 
-	// servicio que tarea el listado de usuarios
+	// servicio que trae el listado de usuarios
 	@GetMapping("/getUsuarios")
 	public ResponseEntity<ErrorMessage<List<Usuario>>> getUser() {
 		List<Usuario> listado = userService.getUsuarios();
