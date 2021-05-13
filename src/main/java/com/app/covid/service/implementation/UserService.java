@@ -52,4 +52,11 @@ public class UserService implements IUserService {
 		return userDao.findByLogin(user, pass);
 	}
 
+	@Override
+	public Usuario findBy(Long id) {
+		return userDao.findBy(id);
+	}
+	
+	
+
 }
