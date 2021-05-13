@@ -8,6 +8,8 @@ public class ResourceMapping {
 
 	public static final String LOGIN = "/login";
 	public static final String USER = "/user";
+	public static final String LOTE = "/lote";
+	public static final String LABORATORIO = "/laboratorio";
 	public static final String ROL = "/rol";
 
 }

@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.app.covid.domain.*;
+import com.app.covid.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -15,12 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.covid.domain.Privilege;
-import com.app.covid.domain.Role;
-import com.app.covid.domain.Usuario;
-import com.app.covid.repository.PrivilegeRepository;
-import com.app.covid.repository.RoleRepository;
-import com.app.covid.repository.IUserRepository;
 import com.app.covid.security.BCryptPasswordEncoder;
 
 @Component
@@ -35,6 +31,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	private PrivilegeRepository privilegeRepository;
 
 	@Autowired
+	private IEstado_loteRepository estadoRepository;
+
+	@Autowired
+	private ILaboratorioRepository laboratorioRepository;
+
+	@Autowired
 	private IUserRepository userRepository;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -45,6 +47,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		if (alreadySetup)
 			return;
+
+		Laboratorio lab = createLaboIfNotFound(1L, "Pfizer");
+		Estado_lote est = createEstadoIfNotFound(1L, "Activo");
+
 		Privilege readPrivilege = createPrivilegeIfNotFound("PERSONAL_PRIVILEGE");
 		Privilege writePrivilege = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
 		Privilege au = createPrivilegeIfNotFound("AUXILIAR_PRIVILEGE");
@@ -83,6 +89,26 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			privilegeRepository.save(privilege);
 		}
 		return privilege;
+	}
+
+	@Transactional
+	private Laboratorio createLaboIfNotFound(Long id, String name) {
+
+		Laboratorio lab = new Laboratorio(id, name);
+
+		laboratorioRepository.save(lab);
+
+		return lab;
+	}
+
+	@Transactional
+	private Estado_lote createEstadoIfNotFound(Long id, String esta) {
+
+		Estado_lote es = new Estado_lote(id, esta);
+
+		estadoRepository.save(es);
+
+		return es;
 	}
 
 	@Transactional

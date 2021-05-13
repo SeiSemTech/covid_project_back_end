@@ -30,7 +30,7 @@ public class RoleController {
 	private IRoleService roleService;
 
 	// servicio que trae el listado de roles
-	@GetMapping("/getRoles")
+	@RequestMapping(value = "/getPerfiles", method = RequestMethod.GET, headers = "Accept=application/json")
 	public ResponseEntity<ErrorMessage<List<Role>>> getRoles() {
 		List<Role> listado = roleService.getRoles();
 		ErrorMessage<List<Role>> error = listado.isEmpty()
@@ -39,13 +39,13 @@ public class RoleController {
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET, headers = "Accept=application/json")
+	/*@RequestMapping(value = "/get", method = RequestMethod.GET, headers = "Accept=application/json")
 	private List<CentroSalud> getStudentObject() {
 		String uri = "https://www.datos.gov.co/resource/u82n-j82m.json";
 		RestTemplate restTemplate = new RestTemplate();
 		CentroSalud result = restTemplate.getForObject(uri, CentroSalud.class);
 		List<CentroSalud> result2 = (List<CentroSalud>) result;
 		return result2;
-	}
+	}*/
 
 }

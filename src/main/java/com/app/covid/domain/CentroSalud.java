@@ -15,7 +15,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @JsonIgnoreProperties( ignoreUnknown = true )
 public class CentroSalud  {
 
