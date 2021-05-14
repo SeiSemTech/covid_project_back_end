@@ -52,7 +52,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			return;
 
 		Laboratorio lab = createLaboIfNotFound(1L, "Pfizer");
-		Estado_lote est = createEstadoIfNotFound(1L, "Activo");
+		Estado_lote est = createEstadoIfNotFound(1L, "Registrado");
+		Estado_lote est2 = createEstadoIfNotFound(2L, "Enviado");
+		Estado_lote est3 = createEstadoIfNotFound(3L, "Recibido");
 		// CentroSalud cen = createCentroIfNotFound(1L, 0L, "", "", "", "", "", "", "",
 		// "");
 

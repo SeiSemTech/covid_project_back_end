@@ -15,7 +15,6 @@ public class Estado_lote {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(nullable = false)

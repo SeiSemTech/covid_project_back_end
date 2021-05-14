@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.app.covid.constants.ResourceMapping;
 import com.app.covid.domain.CentroSalud;
 import com.app.covid.service.ICentroSaludService;
 import com.app.covid.util.ErrorMessage;
 import com.app.covid.util.ErrorMessage2;
 
 @RestController
-@RequestMapping // (ResourceMapping.LOTE)
+@RequestMapping(ResourceMapping.VACUNA)
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST,
 		RequestMethod.OPTIONS }, allowedHeaders = "*")
 public class EntregaController {
