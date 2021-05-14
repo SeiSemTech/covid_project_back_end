@@ -39,6 +39,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Autowired
 	private IUserRepository userRepository;
 
+	@Autowired
+	private ICentroSalud centroRepository;
+
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
@@ -49,7 +52,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			return;
 
 		Laboratorio lab = createLaboIfNotFound(1L, "Pfizer");
-		Estado_lote est = createEstadoIfNotFound(1L, "Activo");
+		Estado_lote est = createEstadoIfNotFound(1L, "Registrado");
+		Estado_lote est2 = createEstadoIfNotFound(2L, "Enviado");
+		Estado_lote est3 = createEstadoIfNotFound(3L, "Recibido");
+		// CentroSalud cen = createCentroIfNotFound(1L, 0L, "", "", "", "", "", "", "",
+		// "");
 
 		Privilege readPrivilege = createPrivilegeIfNotFound("PERSONAL_PRIVILEGE");
 		Privilege writePrivilege = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
@@ -121,4 +128,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		}
 		return role;
 	}
+
+	@Transactional
+	private CentroSalud createCentroIfNotFound(Long id, int cantidad, String depa_nombre, String muni_nombre,
+			String sede_nombre, String direccion, String telefono, String email, String naju_nombre,
+			String fecha_corte_reps) {
+		CentroSalud c = new CentroSalud(id, cantidad, depa_nombre, muni_nombre, sede_nombre, direccion, telefono, email,
+				naju_nombre, fecha_corte_reps);
+		centroRepository.save(c);
+		return c;
+	}
+
 }
