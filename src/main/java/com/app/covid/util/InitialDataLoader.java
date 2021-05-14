@@ -49,7 +49,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		if (alreadySetup)
 			return;
 
-		Laboratorio lab = createLaboIfNotFound(1L, "jj");
+
 
 		Privilege readPrivilege = createPrivilegeIfNotFound("PERSONAL_PRIVILEGE");
 		Privilege writePrivilege = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
