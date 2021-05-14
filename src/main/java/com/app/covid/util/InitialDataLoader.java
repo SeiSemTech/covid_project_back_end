@@ -36,7 +36,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Autowired
 	private ILaboratorioRepository laboratorioRepository;
 
-
 	@Autowired
 	private IUserRepository userRepository;
 
@@ -49,7 +48,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		if (alreadySetup)
 			return;
 
-
+		Laboratorio lab = createLaboIfNotFound(1L, "Pfizer");
+		Estado_lote est = createEstadoIfNotFound(1L, "Activo");
 
 		Privilege readPrivilege = createPrivilegeIfNotFound("PERSONAL_PRIVILEGE");
 		Privilege writePrivilege = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
@@ -92,7 +92,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	}
 
 	@Transactional
-	private Laboratorio createLaboIfNotFound(Long id,String name) {
+	private Laboratorio createLaboIfNotFound(Long id, String name) {
 
 		Laboratorio lab = new Laboratorio(id, name);
 
@@ -110,7 +110,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		return es;
 	}
-
 
 	@Transactional
 	private Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {

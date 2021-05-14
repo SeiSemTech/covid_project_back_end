@@ -22,7 +22,7 @@ public class LaboratorioController {
 	@Autowired
 	private ILaboratorioService laboratorioService;
 
-	// servicio que tarea el listado de Laboratorios
+	// servicio que trae el listado de Laboratorios
 	@GetMapping("/getLaboratorios")
 	public ResponseEntity<ErrorMessage<List<Laboratorio>>> getLaboratorio() {
 		List<Laboratorio> listado = laboratorioService.getLaboratorios();

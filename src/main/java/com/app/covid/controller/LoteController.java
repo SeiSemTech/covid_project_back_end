@@ -22,7 +22,7 @@ public class LoteController {
 	@Autowired
 	private ILoteService loteService;
 
-	// servicio que tarea el listado de Lotes
+	// servicio que trae el listado de Lotes
 	@GetMapping("/getLotes")
 	public ResponseEntity<ErrorMessage<List<Lote>>> getLote() {
 		List<Lote> listado = loteService.getLotes();

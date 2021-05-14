@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.covid.domain.AuthenticationRequest;
 import com.app.covid.domain.Usuario;
 import com.app.covid.security.BCryptPasswordEncoder;
 import com.app.covid.service.IUserService;
@@ -39,7 +38,7 @@ public class UsuarioController {
 	}
 
 	// servicio que trae el listado de usuarios
-	@GetMapping("/getUsuarios")
+	@RequestMapping(value = "/getUsuarios", method = RequestMethod.GET, headers = "Accept=application/json")
 	public ResponseEntity<ErrorMessage<List<Usuario>>> getUser() {
 		List<Usuario> listado = userService.getUsuarios();
 		ErrorMessage<List<Usuario>> error = listado.isEmpty()
@@ -76,17 +75,18 @@ public class UsuarioController {
 		return new ResponseEntity(new ErrorMessage2(0, "Usuario actualizado con exito!"), HttpStatus.OK);
 	}
 
-	// servicio para eliminar un usuario
+	// servicio para desactivar un usuario
 	@RequestMapping(value = "/deleteUsuario", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> deleteUsuario(@RequestBody Usuario user) {
-		Optional<Usuario> us = userService.findByIdUsuario(user.getId());
-		if (!us.isPresent()) {
+		Usuario us = userService.findBy(user.getId());
+		System.out.println(us);
+		if (us == null) {
 			return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el usuario"), HttpStatus.OK);
 		}
-		if (user.getState() == true) {
-			user.setState(false);
+		if (us.getState() == true) {
+			us.setState(false);
 		}
-		userService.updateUsuario(user);
+		userService.updateUsuario(us);
 		return new ResponseEntity(new ErrorMessage2(0, "Usuario desactivado con exito!"), HttpStatus.OK);
 	}
 
