@@ -13,14 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled=true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserDetailService myAppUserDetailsService;	
+	private UserDetailService myAppUserDetailsService;
 
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
@@ -38,16 +37,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-		.authorizeRequests()
-		.antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-		.antMatchers("/login").permitAll()
-		.antMatchers("/user/**").hasAnyAuthority("ADMIN_PRIVILEGE")
-		.antMatchers("/logistica/**").hasAnyAuthority("AUXILIAR_PRIVILEGE")
-		.and().sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.antMatchers("/login").permitAll().antMatchers("/user/**").hasAnyAuthority("ADMIN_PRIVILEGE")
+				.antMatchers("/lote/**").hasAnyAuthority("AUXILIAR_PRIVILEGE").antMatchers("/laboratorio/**")
+				.hasAnyAuthority("AUXILIAR_PRIVILEGE").antMatchers("/logistica/**")
+				.hasAnyAuthority("AUXILIAR_PRIVILEGE").and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-	} 
+	}
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(myAppUserDetailsService).passwordEncoder(bCryptPasswordEncoder());

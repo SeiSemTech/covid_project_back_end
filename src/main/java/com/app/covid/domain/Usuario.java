@@ -44,6 +44,7 @@ public class Usuario {
 	private String username;
 
 	@Column
+	@JsonIgnore
 	private String password;
 
 	@Column(name="document", unique=true)

@@ -13,5 +13,9 @@ public interface IUserRepository extends CrudRepository<Usuario, Long> {
 	
 	@Query("Select u FROM Usuario u WHERE u.username = :user AND u.password = :pss")
 	Usuario findByLogin(@Param("user") String user, @Param("user") String pss);
+	
+	@Query("Select u FROM Usuario u WHERE u.id = :user")
+	Usuario findBy(@Param("user") Long user);
+
 
 }
