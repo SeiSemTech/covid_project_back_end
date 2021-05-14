@@ -18,7 +18,7 @@ public interface ILoteService {
 
 	Optional<Lote> findByIdLote(Long id);
 
-	Lote findByLote(int lote);
+	Lote findByLote(Long lote);
 
 
 }
