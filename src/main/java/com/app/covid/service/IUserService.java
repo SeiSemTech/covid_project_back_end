@@ -20,5 +20,7 @@ public interface IUserService {
 	Usuario findByUser(String user);
 
 	Usuario findByLogin(String user, String pass);
+	
+	Usuario findBy(Long id);
 
 }
