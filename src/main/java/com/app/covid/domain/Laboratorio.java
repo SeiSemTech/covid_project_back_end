@@ -16,7 +16,6 @@ public class Laboratorio {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(nullable = false)

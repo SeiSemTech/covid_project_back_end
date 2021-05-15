@@ -34,4 +34,5 @@ public class Entrega {
 	@JsonProperty("depa_nombre")
 	@Column
 	private String direcion;
+	
 }

@@ -46,5 +46,9 @@ public class LoteService implements ILoteService {
 		return loteDao.findByLote(lote);
 	}
 
+	@Override
+	public Lote findBy(Long lot) {
+		return loteDao.findBy(lot);
+	}
 
 }

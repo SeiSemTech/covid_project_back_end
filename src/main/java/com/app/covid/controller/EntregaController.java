@@ -2,6 +2,7 @@ package com.app.covid.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.app.covid.constants.ResourceMapping;
 import com.app.covid.domain.CentroSalud;
+import com.app.covid.domain.Lote;
 import com.app.covid.service.ICentroSaludService;
+import com.app.covid.service.ILoteService;
 import com.app.covid.util.ErrorMessage;
 import com.app.covid.util.ErrorMessage2;
 
@@ -27,6 +30,9 @@ public class EntregaController {
 
 	@Autowired
 	private ICentroSaludService centroService;
+
+	@Autowired
+	private ILoteService loteService;
 
 	// servicio que trae el listado de centros
 	@RequestMapping(value = "/getCentros", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -70,7 +76,20 @@ public class EntregaController {
 			return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el centro de salud"), HttpStatus.OK);
 		}
 		cen.setCantidad(centro.getCantidad());
-		centroService.updateCentro(cen);
+		Lote lo = loteService.findBy(centro.getLote().getId());
+		if (lo.getId() != null) {
+			int resta = 0;
+			if (lo.getCantidad() > centro.getCantidad()) {
+				resta = lo.getCantidad() - centro.getCantidad();
+				lo.setCantidad(resta);
+				centroService.updateCentro(cen);
+				loteService.updateLote(lo);
+			} else {
+				return new ResponseEntity(new ErrorMessage2(2, "El lote no se encuentra disponible"), HttpStatus.OK);
+			}
+		} else {
+			return new ResponseEntity(new ErrorMessage2(2, "El lote no se encuentra disponible"), HttpStatus.OK);
+		}
 		return new ResponseEntity(new ErrorMessage2(0, "centro de salud actualizado con exito!"), HttpStatus.OK);
 	}
 
