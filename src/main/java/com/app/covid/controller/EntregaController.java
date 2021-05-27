@@ -68,7 +68,7 @@ public class EntregaController {
 		return centro;
 	}
 
-	// servicio para actualizar centro
+	// servicio para enviar vacunacion
 	@RequestMapping(value = "/enviarVacuna", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> deleteUsuario(@RequestBody CentroSalud centro) {
 		CentroSalud cen = centroService.findByC(centro.getId());
@@ -85,7 +85,10 @@ public class EntregaController {
 				centroService.updateCentro(cen);
 				loteService.updateLote(lo);
 			} else {
-				return new ResponseEntity(new ErrorMessage2(2, "El lote no se encuentra disponible"), HttpStatus.OK);
+				return new ResponseEntity(new ErrorMessage2(2,
+						"El lote no cuenta con la cantidad solicitada; Cantidad disponible actualmente:"
+								+ lo.getCantidad()),
+						HttpStatus.OK);
 			}
 		} else {
 			return new ResponseEntity(new ErrorMessage2(2, "El lote no se encuentra disponible"), HttpStatus.OK);

@@ -43,8 +43,7 @@ public class Usuario {
 	@Column(name="username", unique=true)
 	private String username;
 
-	@Column
-	@JsonIgnore
+	@Column(nullable = false)
 	private String password;
 
 	@Column(name="document", unique=true)

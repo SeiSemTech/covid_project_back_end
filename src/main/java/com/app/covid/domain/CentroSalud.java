@@ -74,8 +74,5 @@ public class CentroSalud {
 	@JoinColumn(name = "id_lote", referencedColumnName = "id", nullable = true)
 	private Lote lote;
 
-	@ManyToOne
-	@JoinColumn(name = "id_laboratorio", referencedColumnName = "id", nullable = false)
-	private Laboratorio laboratorio;
 
 }
