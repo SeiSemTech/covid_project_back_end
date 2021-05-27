@@ -42,7 +42,7 @@ public class LoteService implements ILoteService {
 	}
 
 	@Override
-	public Lote findByLote(int lote) {
+	public Lote findByLote(Long lote) {
 		return loteDao.findByLote(lote);
 	}
 
