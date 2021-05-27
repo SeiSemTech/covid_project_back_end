@@ -20,5 +20,6 @@ public interface ILoteService {
 
 	Lote findByLote(Long lote);
 
+	Lote findBy(Long lot);
 
 }

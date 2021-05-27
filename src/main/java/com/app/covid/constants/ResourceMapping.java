@@ -12,5 +12,6 @@ public class ResourceMapping {
 	public static final String LABORATORIO = "/laboratorio";
 	public static final String ROL = "/rol";
 	public static final String VACUNA = "/vacuna";
+	public static final String PACIENTE = "/paciente";
 
 }
