@@ -50,8 +50,9 @@ public class UsuarioController {
 	// servicio para crear un usuario
 	@RequestMapping(value = "/createUsuario", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> createUser(@RequestBody Usuario user) {
-		Usuario user2 = userService.findByUser(user.getDocument());
-		if (user2 != null) {
+		Usuario user2 = userService.findByUser(user.getUsername());
+		Usuario user3 = userService.findByDoc(user.getDocument());
+		if (user2 != null || user3 != null) {
 			return new ResponseEntity(new ErrorMessage2(1, "El usuario ya se encuentra registrado"), HttpStatus.OK);
 		}
 

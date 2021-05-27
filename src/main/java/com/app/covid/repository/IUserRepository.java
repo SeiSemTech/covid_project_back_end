@@ -17,5 +17,8 @@ public interface IUserRepository extends CrudRepository<Usuario, Long> {
 	@Query("Select u FROM Usuario u WHERE u.id = :user")
 	Usuario findBy(@Param("user") Long user);
 
+	@Query("Select u FROM Usuario u WHERE u.document = :user")
+	Usuario findByDoc(@Param("user") String user);
+
 
 }

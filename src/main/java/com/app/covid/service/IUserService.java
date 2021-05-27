@@ -23,4 +23,6 @@ public interface IUserService {
 	
 	Usuario findBy(Long id);
 
+	Usuario findByDoc(String doc);
+
 }

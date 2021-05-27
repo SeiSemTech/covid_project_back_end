@@ -56,6 +56,11 @@ public class UserService implements IUserService {
 	public Usuario findBy(Long id) {
 		return userDao.findBy(id);
 	}
+
+	@Override
+	public Usuario findByDoc(String doc) {
+		return userDao.findByDoc(doc);
+	}
 	
 	
 
