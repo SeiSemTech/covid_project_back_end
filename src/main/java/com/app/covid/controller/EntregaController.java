@@ -67,7 +67,7 @@ public class EntregaController {
 		}
 		return centro;
 	}
-
+/*
 	// servicio para enviar vacunacion
 	@RequestMapping(value = "/enviarVacuna", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> deleteUsuario(@RequestBody CentroSalud centro) {
@@ -95,5 +95,5 @@ public class EntregaController {
 		}
 		return new ResponseEntity(new ErrorMessage2(0, "centro de salud actualizado con exito!"), HttpStatus.OK);
 	}
-
+*/
 }

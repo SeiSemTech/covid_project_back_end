@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.app.covid.domain.CentroPoblado.CentroPobladoBuilder;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,18 +21,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ocupacion")
-public class Ocupacion {
+@Table(name = "departamento")
+public class Departamento {
 
 	@Id
 	@Column
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column
-	private String nombre;
+	private String nombre_departamento;
 
 	@ManyToOne
-	@JoinColumn(name = "id_sector", referencedColumnName = "id", nullable = false)
-	private Sector sector;
+	@JoinColumn(name = "id_region", referencedColumnName = "id", nullable = false)
+	private Region region;
+
 }

@@ -20,8 +20,13 @@ public class Paciente {
 
 	@Id
 	@Column
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column
+	private Long id_cedula;
+
+	@Column
+	private String tipo_documento;
 
 	@Column
 	private String nombre_paciente;
@@ -30,11 +35,14 @@ public class Paciente {
 	private String apellido_paciente;
 
 	@Column
-	private String id_cedula;
-	@Column
-	private String tipo_documento;
-	@Column
 	private Date fecha_nacimiento;
+
+	@Column
+	private int comorbilidades;
+
+	@ManyToOne
+	@JoinColumn(name = "id_ocupacion", referencedColumnName = "id", nullable = false)
+	private Ocupacion ocupacion;
 
 	@ManyToOne
 	@JoinColumn(name = "id_centro_salud", referencedColumnName = "id", nullable = false)
@@ -47,9 +55,5 @@ public class Paciente {
 	@ManyToOne
 	@JoinColumn(name = "id_estado_paciente", referencedColumnName = "id", nullable = false)
 	private EstadoPaciente estadoPaciente;
-
-	@ManyToOne
-	@JoinColumn(name = "id_ocupacion", referencedColumnName = "id", nullable = false)
-	private Ocupacion ocupacion;
 
 }
