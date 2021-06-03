@@ -3,8 +3,6 @@ package com.app.covid.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -19,18 +17,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ocupacion")
-public class Ocupacion {
-
+@Table(name = "region")
+public class Region {
 	@Id
 	@Column
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column
 	private String nombre;
 
-	@ManyToOne
-	@JoinColumn(name = "id_sector", referencedColumnName = "id", nullable = false)
-	private Sector sector;
 }

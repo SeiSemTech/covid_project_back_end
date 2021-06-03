@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.app.covid.domain.Departamento.DepartamentoBuilder;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,27 +20,19 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "centro_salud")
-public class CentroSalud {
+@Entity
+@Table(name = "municipio")
+public class Municipio {
+
 	@Id
 	@Column
 	private Long id;
 
 	@Column
-	private String nombre;
-
-	@Column
-	private String direccion;
-
-	@Column(nullable = true)
-	private Integer cantidad;
+	private String nombre_municipio;
 
 	@ManyToOne
-	@JoinColumn(name = "id_lote", referencedColumnName = "id", nullable = true)
-	private Lote lote;
-
-	@ManyToOne
-	@JoinColumn(name = "id_centro_poblado", referencedColumnName = "id", nullable = false)
-	private CentroPoblado centroPoblado;
+	@JoinColumn(name = "id_departamento", referencedColumnName = "id", nullable = false)
+	private Departamento departamento;
 
 }

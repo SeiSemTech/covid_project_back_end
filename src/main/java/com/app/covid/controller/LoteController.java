@@ -5,6 +5,7 @@ import com.app.covid.domain.Lote;
 import com.app.covid.service.ILoteService;
 import com.app.covid.util.ErrorMessage;
 import com.app.covid.util.ErrorMessage2;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,24 @@ public class LoteController {
 	@GetMapping("/getLotes")
 	public ResponseEntity<ErrorMessage<List<Lote>>> getLote() {
 		List<Lote> listado = loteService.getLotes();
-		ErrorMessage<List<Lote>> error = listado.isEmpty() ?
-				new ErrorMessage<>(1, "No se ha encontrado información",null) :
-				new ErrorMessage<>(0, "Lista de Lotes", listado);
+		ErrorMessage<List<Lote>> error = listado.isEmpty()
+				? new ErrorMessage<>(1, "No se ha encontrado información", null)
+				: new ErrorMessage<>(0, "Lista de Lotes", listado);
 		return new ResponseEntity<>(error, HttpStatus.OK);
+	}
+
+	// servicio que consulta el total de las vacunas
+	@GetMapping("/getTotalVacunas")
+	public ResponseEntity<ErrorMessage<List<Lote>>> getTotal() {
+		List<Lote> listado = loteService.getLotes();
+		int total = 0;
+		if (!listado.isEmpty()) {
+			for (int i = 0; i < listado.size(); i++) {
+				System.out.println(listado.get(i).getCantidad());
+				total += listado.get(i).getCantidad();
+			}
+		}
+		return new ResponseEntity(new ErrorMessage(0, "Total de vacunas", total), HttpStatus.OK);
 	}
 
 	// servicio para crear un Lote
@@ -68,6 +83,5 @@ public class LoteController {
 		loteService.deleteLote(lote.getId());
 		return new ResponseEntity(new ErrorMessage2(0, "Lote eliminado con exito!"), HttpStatus.OK);
 	}
-
 
 }

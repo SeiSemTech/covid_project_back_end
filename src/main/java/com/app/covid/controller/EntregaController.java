@@ -1,8 +1,6 @@
 package com.app.covid.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.app.covid.constants.ResourceMapping;
 import com.app.covid.domain.CentroSalud;
@@ -44,29 +41,20 @@ public class EntregaController {
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/buscarCentros", method = RequestMethod.GET, headers = "Accept=application/json")
-	private List<CentroSalud> getCentros() {
-		String uri = "https://www.datos.gov.co/resource/u82n-j82m.json";
-		RestTemplate restTemplate = new RestTemplate();
-		CentroSalud[] result = restTemplate.getForObject(uri, CentroSalud[].class);
-		CentroSalud centroG = null;
-		List<CentroSalud> centro = new ArrayList<>();
-
-		for (int i = 0; i < result.length; i++) {
-			centro.add(result[i]);
-			for (int i1 = 0; i1 < centro.size(); i1++) {
-				centroG = centro.get(i);
-			}
-			CentroSalud cen = centroService.findByCentro(centroG.getDireccion());
-			if (cen == null) {
-				centroService.updateCentro(centroG);
-				System.out.println("No existe");
-			} else {
-				System.out.println("ya existe");
-			}
-		}
-		return centro;
-	}
+	/*
+	 * @RequestMapping(value = "/buscarCentros", method = RequestMethod.GET, headers
+	 * = "Accept=application/json") private List<CentroSalud> getCentros() { String
+	 * uri = "https://www.datos.gov.co/resource/u82n-j82m.json"; RestTemplate
+	 * restTemplate = new RestTemplate(); CentroSalud[] result =
+	 * restTemplate.getForObject(uri, CentroSalud[].class); CentroSalud centroG =
+	 * null; List<CentroSalud> centro = new ArrayList<>();
+	 * 
+	 * for (int i = 0; i < result.length; i++) { centro.add(result[i]); for (int i1
+	 * = 0; i1 < centro.size(); i1++) { centroG = centro.get(i); } CentroSalud cen =
+	 * centroService.findByCentro(centroG.getDireccion()); if (cen == null) {
+	 * centroService.updateCentro(centroG); System.out.println("No existe"); } else
+	 * { System.out.println("ya existe"); } } return centro; }
+	 */
 
 	// servicio para enviar vacunacion
 	@RequestMapping(value = "/enviarVacuna", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -75,7 +63,13 @@ public class EntregaController {
 		if (cen == null) {
 			return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el centro de salud"), HttpStatus.OK);
 		}
-		cen.setCantidad(centro.getCantidad());
+		int cantidad = 0;
+		if (cen.getCantidad() == null) {
+			cantidad = 0;
+		} else {
+			cantidad = cen.getCantidad();
+		}
+		cen.setCantidad(cantidad + centro.getCantidad());
 		Lote lo = loteService.findBy(centro.getLote().getId());
 		if (lo.getId() != null) {
 			int resta = 0;
@@ -86,14 +80,13 @@ public class EntregaController {
 				loteService.updateLote(lo);
 			} else {
 				return new ResponseEntity(new ErrorMessage2(2,
-						"El lote no cuenta con la cantidad solicitada; Cantidad disponible actualmente:"
-								+ lo.getCantidad()),
+						"El lote no cuenta con la cantidad solicitada; Cantidad disponible :" + lo.getCantidad()),
 						HttpStatus.OK);
 			}
 		} else {
 			return new ResponseEntity(new ErrorMessage2(2, "El lote no se encuentra disponible"), HttpStatus.OK);
 		}
-		return new ResponseEntity(new ErrorMessage2(0, "centro de salud actualizado con exito!"), HttpStatus.OK);
+		return new ResponseEntity(new ErrorMessage2(0, "Vacunas enviadas con exito!"), HttpStatus.OK);
 	}
 
 }
