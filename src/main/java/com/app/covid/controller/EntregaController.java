@@ -86,7 +86,7 @@ public class EntregaController {
 		} else {
 			return new ResponseEntity(new ErrorMessage2(2, "El lote no se encuentra disponible"), HttpStatus.OK);
 		}
-		return new ResponseEntity(new ErrorMessage2(0, "centro de salud actualizado con exito!"), HttpStatus.OK);
+		return new ResponseEntity(new ErrorMessage2(0, "Vacunas enviadas con exito!"), HttpStatus.OK);
 	}
 
 }
