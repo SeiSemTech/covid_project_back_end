@@ -33,7 +33,7 @@ public class LoteController {
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 
-	// servicio que trae el total de las vacunas
+	// servicio que consulta el total de las vacunas
 	@GetMapping("/getTotalVacunas")
 	public ResponseEntity<ErrorMessage<List<Lote>>> getTotal() {
 		List<Lote> listado = loteService.getLotes();
