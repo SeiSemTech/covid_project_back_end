@@ -50,7 +50,7 @@ public class LoteController {
 	// servicio para crear un Lote
 	@RequestMapping(value = "/createLote", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> createLote(@RequestBody Lote lote) {
-		Lote lote2 = loteService.findByLote(lote.getNumero());
+		Lote lote2 = loteService.findByLote(lote.getId());
 		if (lote2 != null) {
 			return new ResponseEntity(new ErrorMessage2(1, "El Lote ya se encuentra registrado"), HttpStatus.OK);
 		}
