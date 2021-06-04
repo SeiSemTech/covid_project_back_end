@@ -72,7 +72,7 @@ public class UsuarioController {
 		if (!us.isPresent()) {
 			return new ResponseEntity(new ErrorMessage2(1, "No sea encontrado el usuario"), HttpStatus.OK);
 		}
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		// user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.updateUsuario(user);
 		return new ResponseEntity(new ErrorMessage2(0, "Usuario actualizado con exito!"), HttpStatus.OK);
 	}
