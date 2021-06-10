@@ -41,7 +41,7 @@ public class PacienteController {
 
 	@RequestMapping(value = "/PacientesCentro", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<ErrorMessage<List<Paciente>>> getPacientesCentro(@RequestBody Paciente pac) {
-		List<Paciente> listado = pacienteService.findByCentro(pac.getId());
+		List<Paciente> listado = pacienteService.findByCentro(pac.getCentroSalud().getId());
 		ErrorMessage<List<Paciente>> error = listado.isEmpty()
 				? new ErrorMessage<>(1, "No se ha encontrado información", null)
 				: new ErrorMessage<>(0, "Lista de Pacientes por el centro dado", listado);
