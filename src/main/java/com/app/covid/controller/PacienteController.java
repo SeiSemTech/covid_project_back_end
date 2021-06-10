@@ -5,14 +5,11 @@ import com.app.covid.domain.Paciente;
 
 import java.util.List;
 
+import com.app.covid.domain.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.app.covid.service.IPacienteService;
 import com.app.covid.util.ErrorMessage;
@@ -39,6 +36,15 @@ public class PacienteController {
 		ErrorMessage<List<Paciente>> error = listado.isEmpty()
 				? new ErrorMessage<>(1, "No se ha encontrado información", null)
 				: new ErrorMessage<>(0, "Lista de Pacientes", listado);
+		return new ResponseEntity<>(error, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/PacientesCentro", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<ErrorMessage<List<Paciente>>> getPacientesCentro(@RequestBody Paciente pac) {
+		List<Paciente> listado = pacienteService.findByCentro(pac.getId());
+		ErrorMessage<List<Paciente>> error = listado.isEmpty()
+				? new ErrorMessage<>(1, "No se ha encontrado información", null)
+				: new ErrorMessage<>(0, "Lista de Pacientes por el centro dado", listado);
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 

@@ -10,4 +10,6 @@ public interface IPacienteService {
 
 	Paciente findBy(Long id);
 
+	List<Paciente> findByCentro(Long id_centro);
+
 }
