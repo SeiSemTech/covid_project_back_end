@@ -30,4 +30,9 @@ public class PacienteService implements IPacienteService {
 		return (List<Paciente>) pacienteDao.findByCentro(id_centro);
 	}
 
+	@Override
+	public Paciente updatePaciente(Paciente pac) {
+		return pacienteDao.save(pac);
+	}
+
 }
