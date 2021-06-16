@@ -25,4 +25,14 @@ public class PacienteService implements IPacienteService {
 		return pacienteDao.findBy(id);
 	}
 
+	@Override
+	public List<Paciente> findByCentro(Long id_centro) {
+		return (List<Paciente>) pacienteDao.findByCentro(id_centro);
+	}
+
+	@Override
+	public Paciente updatePaciente(Paciente pac) {
+		return pacienteDao.save(pac);
+	}
+
 }

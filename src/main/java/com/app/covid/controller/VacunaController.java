@@ -23,7 +23,7 @@ import com.app.covid.util.ErrorMessage2;
 @RequestMapping(ResourceMapping.VACUNA)
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST,
 		RequestMethod.OPTIONS }, allowedHeaders = "*")
-public class EntregaController {
+public class VacunaController {
 
 	@Autowired
 	private ICentroSaludService centroService;
@@ -33,7 +33,7 @@ public class EntregaController {
 
 	// servicio que trae el listado de centros
 	@RequestMapping(value = "/getCentros", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ResponseEntity<ErrorMessage<List<CentroSalud>>> getce() {
+	public ResponseEntity<ErrorMessage<List<CentroSalud>>> getCentos() {
 		List<CentroSalud> listado = centroService.getCentros();
 		ErrorMessage<List<CentroSalud>> error = listado.isEmpty()
 				? new ErrorMessage<>(1, "No se ha encontrado información", null)
