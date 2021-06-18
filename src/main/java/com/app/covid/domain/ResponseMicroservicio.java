@@ -20,8 +20,8 @@ import lombok.Setter;
 public class ResponseMicroservicio {
 
 	private boolean error;
-	private Long x;
-	private Long y;
+	private double x;
+	private double y;
 	private String distance;
 	private String id;
 	private String address;
